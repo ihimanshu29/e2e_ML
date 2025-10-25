@@ -1,4 +1,4 @@
-from mlProject.constants import *
+from mlProject.constants import * #importing yaml file paths 
 from mlProject.utils.common import read_yaml, create_directories
 from mlProject.entity.config_entity import (DataIngestionConfig,
                                             DataValidationConfig,
@@ -7,13 +7,17 @@ from mlProject.entity.config_entity import (DataIngestionConfig,
                                             ModelEvaluationConfig)
 
 
+
+
 class ConfigurationManager:
     def __init__(
         self,
+        #assigning yaml filepaths to thw user variable
         config_filepath = CONFIG_FILE_PATH,
         params_filepath = PARAMS_FILE_PATH,
         schema_filepath = SCHEMA_FILE_PATH):
 
+        #reading yaml paths to locate yaml files
         self.config = read_yaml(config_filepath)
         self.params = read_yaml(params_filepath)
         self.schema = read_yaml(schema_filepath)
@@ -22,17 +26,18 @@ class ConfigurationManager:
 
 
     def get_data_ingestion_config(self) -> DataIngestionConfig:
+        # here self.config already points to the conig_yaml where we are accessing data_ingestion block and assigning to config
         config = self.config.data_ingestion
-
+        # inside data_ingestion block in yaml "root_dir" key contains value "artifacts/data_ingestion" and we are creating folders with similar setting if not already existing
         create_directories([config.root_dir])
-
+        # here config contains whole data_ingestion block through which we are accessing sub keys like root_dir, source_url etc and storing respective values in the class and also storing them as instance inside data_ingestion_config 
         data_ingestion_config = DataIngestionConfig(
             root_dir=config.root_dir,
             source_URL=config.source_URL,
             local_data_file=config.local_data_file,
             unzip_dir=config.unzip_dir 
         )
-
+        #returning root dir, s url, etc.
         return data_ingestion_config
 
     
@@ -64,7 +69,7 @@ class ConfigurationManager:
         )
 
         return data_transformation_config
-
+    
 
     
     def get_model_trainer_config(self) -> ModelTrainerConfig:
@@ -81,7 +86,8 @@ class ConfigurationManager:
             model_name = config.model_name,
             alpha = params.alpha,
             l1_ratio = params.l1_ratio,
-            target_column = schema.name
+            target_column = schema.name,
+            random_state = params.random_state
             
         )
 
