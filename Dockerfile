@@ -7,6 +7,9 @@ ENV PYTHONUNBUFFERED=1
 # Set the working directory
 WORKDIR /app
 
+# CRITICAL: Add the current directory to the PYTHONPATH so Python can find 'mlProject'
+ENV PYTHONPATH=/app/src:$PYTHONPATH
+
 # Copy requirements and install dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
@@ -26,4 +29,6 @@ EXPOSE 10000
 # -w 4: 4 worker processes for concurrency
 # --bind 0.0.0.0:$PORT: Listens on the port provided by the Render environment variable
 # wsgi:app: Runs the 'app' Flask object found inside the 'wsgi.py' file.
-CMD ["gunicorn", "--workers", "4", "--bind", "0.0.0.0:$PORT", "wsgi:app"]
+# CMD ["gunicorn", "--workers", "4", "--bind", "0.0.0.0:$PORT", "wsgi:app"]
+# Use the shell format to ensure $PORT is replaced with its value
+CMD gunicorn --workers 4 --bind 0.0.0.0:$PORT wsgi:app
