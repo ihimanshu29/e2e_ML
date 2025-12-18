@@ -25,6 +25,9 @@ This project demonstrates a **complete end-to-end Machine Learning workflow**, d
 The core objective is to **predict the quality of wine** based on various chemical and physical parameters such as acidity, sugar content, pH, and alcohol levels.  
 It goes far beyond a simple model training exercise — it represents a **production-ready ML pipeline**, from raw data ingestion to deployment.
 
+<img width="1177" height="849" alt="Screenshot 2025-12-18 160440" src="https://github.com/user-attachments/assets/a9f85c7d-2ace-4d0f-92bc-ef17d0118697" />
+
+
 ---
 
 ## 🎯 Purpose & Reflection
